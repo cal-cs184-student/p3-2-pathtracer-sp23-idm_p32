@@ -132,11 +132,11 @@
                     the light source to our camera.
                 </li>
                 <li style="line-height:200%">
-                    m = 2, we can see the light on the back sphere, because we now can observe the light that is first reflected from other objects 
-                    and reflected from the back sphere to the camera. We can not see the front sphere because it relies on refraction. 
+                    m = 2, we can see the light on the back sphere, because we now can observe the light that is first reflected from other objects
+                    and reflected from the back sphere to the camera. We can not see the front sphere because it relies on refraction.
                 </li>
                 <li style="line-height:200%">
-                    m = 3, we can finally see the refraction of light inside the ball and it appears as glass.  
+                    m = 3, we can finally see the refraction of light inside the ball and it appears as glass.
                     Why we need three bounces: The light is first reflected from other objects to the ball (1 bounce) and the light need to
                     pass through the ball through refraction (2 bounces). So the total required number of bounces is 3.
                     We also notice that the reflection of the walls of the box on the mirror ball are lit, as light rays have enough depth to bounce on the wall, on to the mirror ball, and into the camera.
@@ -144,7 +144,7 @@
                 <li style="line-height:200%">
                     m = 4, there are two differences: we now can observe a concentrated spot on light on the right wall and the reflectance
                     of the front ball inside the second ball begins to have light. Why these differences happen: because we have finished refraction through 3 bounces
-                    so the light after 3 bounces can reflect on other objects to generate light reflection. 
+                    so the light after 3 bounces can reflect on other objects to generate light reflection.
                 </li>
 
                 <li style="line-height:200%">
@@ -162,8 +162,35 @@
                 Show a screenshot sequence of 4 images of scene `CBdragon_microfacet_au.dae` rendered with $\alpha$ set to 0.005, 0.05, 0.25 and 0.5. The other settings should be at least 128 samples per pixel and 1 samples per light. The number of bounces should be at least 5. Describe the differences between different images. Note that, to change the $\alpha$, just open the .dae file and search for `microfacet`.
             </b>
         </p>
-        <p>
-            Your response goes here.
+        <div align="middle">
+            <table style="width:100%">
+                <tr align="center">
+                    <td>
+                        <img src="part2/1_1.png" align="middle" width="400px" />
+                        <figcaption>alpha = 0.005</figcaption>
+                    </td>
+                    <td>
+                        <img src="part2/1_2.png" align="middle" width="400px" />
+                        <figcaption>alpha = 0.05</figcaption>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td>
+                        <img src="part2/1_3.png" align="middle" width="400px" />
+                        <figcaption>alpha = 0.25</figcaption>
+                    </td>
+                    <td>
+                        <img src="part2/1_4.png" align="middle" width="400px" />
+                        <figcaption>alpha = 0.5</figcaption>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p style="line-height:200%">
+            We changed the Alpha value from 0.005 to 0.5. Alpha value is the roughness value of a macro surface. As the instruction mentioned,
+            The smaller alpha is, the smoother the macro surface will be. In other words, the macro surface tends to be diffuse when
+            alpha is large and glossy when alpha is small. This phenomena can be observed from the pictures above. For the dragon with
+            alpha = 0.005, we can easily see the reflection of walls on the dragon's surface.
         </p>
         <br />
         <p>
@@ -171,8 +198,37 @@
                 Show two images of scene `CBbunny_microfacet_cu.dae` rendered using cosine hemisphere sampling (default) and your importance sampling. The sampling rate should be fixed at 64 samples per pixel and 1 samples per light. The number of bounces should be at least 5. Briefly discuss their difference.
             </b>
         </p>
-        <p>
-            Your response goes here.
+        <div align="middle">
+            <table style="width:100%">
+                <tr align="center">
+                    <td>
+                        <img src="part2/2_1.png" align="middle" width="400px" />
+                        <figcaption>cosine hemisphere sampling</figcaption>
+                    </td>
+                    <td>
+                        <img src="part2/2_2.png" align="middle" width="400px" />
+                        <figcaption>importance sampling</figcaption>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p style="line-height:200%">
+            Here is an explanation of <b> cosine hemisphere sampling</b> and <b> importance sampling</b>:
+            <ul>
+                <li style="line-height:200%">
+                    <b>Cosine hemisphere sampling</b>: Cosine hemisphere sampling involves generating random points on the hemisphere centered at
+                    the surface normal, where the probability of selecting a point is proportional to the cosine of the angle
+                    between the surface normal and the direction of the point.However, cosine hemisphere sampling does not take into account the reflectance properties of the material, 
+                    and can result in a large number of samples being wasted on areas of the hemisphere where the reflectance is low. So because of our low sampling
+                    rate, the rendering result on the microfacet surface contains a lot of noise.
+                </li>
+                <li style="line-height:200%">
+                    <b>Importance sampling</b>: Importance sampling involves generating samples based on the reflectance properties of the material. 
+                    This means that samples are more likely to be generated in areas where the reflectance is high, 
+                    resulting in a more efficient use of the samples. 
+                    This can lead to a significant improvement in rendering quality and efficiency, which can be observed in the example image.
+                </li>
+            </ul>
         </p>
         <br />
         <p>
@@ -180,8 +236,23 @@
                 Show at least one image with some other conductor material, replacing `eta` and `k`. Note that you should look up values for real data rather than modifying them arbitrarily. Tell us what kind of material your parameters correspond to.
             </b>
         </p>
-        <p>
-            Your response goes here.
+        <div align="middle">
+            <table style="width:100%">
+                <tr align="center">
+                    <td>
+                        <img src="part2/3_3.png" align="middle" width="400px" />
+                        <figcaption>gold -> silver</figcaption>
+                    </td>
+                    <td>
+                        <img src="part2/3_1.png" align="middle" width="400px" />
+                        <figcaption>gold -> copper</figcaption>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <p style="line-height:200%">
+            The original material of this dragon sculpture is gold as it is shown in 2.1 (the first experiment in Microfacet rendering).
+            We changed its material to silver and copper and have a nice reasonable result.
         </p>
         <br />
 
