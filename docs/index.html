@@ -218,14 +218,14 @@
                 <li style="line-height:200%">
                     <b>Cosine hemisphere sampling</b>: Cosine hemisphere sampling involves generating random points on the hemisphere centered at
                     the surface normal, where the probability of selecting a point is proportional to the cosine of the angle
-                    between the surface normal and the direction of the point.However, cosine hemisphere sampling does not take into account the reflectance properties of the material, 
+                    between the surface normal and the direction of the point.However, cosine hemisphere sampling does not take into account the reflectance properties of the material,
                     and can result in a large number of samples being wasted on areas of the hemisphere where the reflectance is low. So because of our low sampling
                     rate, the rendering result on the microfacet surface contains a lot of noise.
                 </li>
                 <li style="line-height:200%">
-                    <b>Importance sampling</b>: Importance sampling involves generating samples based on the reflectance properties of the material. 
-                    This means that samples are more likely to be generated in areas where the reflectance is high, 
-                    resulting in a more efficient use of the samples. 
+                    <b>Importance sampling</b>: Importance sampling involves generating samples based on the reflectance properties of the material.
+                    This means that samples are more likely to be generated in areas where the reflectance is high,
+                    resulting in a more efficient use of the samples.
                     This can lead to a significant improvement in rendering quality and efficiency, which can be observed in the example image.
                 </li>
             </ul>
@@ -261,14 +261,35 @@
 
         <h3 align="middle" class="page-break">Part 3. Environment Lightl</h3>
         <b>Pick one *.exr* file to use for all subparts here. Include a converted *.jpg* of it in your website so we know what map you are using.</b>
-
+        <div align="middle">
+            <img src="part3/ennis.jpg" align="middle" width="50%" />
+            <figcaption>*ennis.exr*</figcaption>
+        </div>
+        <p>
+            We choose a different *.exr* file than the original instruction. We choose <b>ennis.exr</b> for our following experiments.
+        </p>
         <p>
             <b>
                 In a few sentences, explain the ideas behind environment lighting (i.e. why we do it/how it works).
             </b>
         </p>
-        <p>
-            Your response goes here.
+        <p style="line-height:200%">
+            Here is the illustration of the ideas behind environment lighting:
+            <ul>
+                <li style="line-height:200%">
+                    <b>Why do we need environment lighting</b>: By using an environment lighting, the lighting of the scene can be made more realistic and immersive,
+                    as the objects in the scene will reflect the lighting information from their surroundings. This can help to create a more convincing virtual environment for applications such as video games,
+                    virtual reality, and architectural visualization.
+                </li>
+                <li style="line-height:200%">
+                    <b>How environment lighting works</b>: Environment lighting refers to the use of an environment map to simulate
+                    the effect of indirect lighting in a scene.An environment map is a texture that encodes the lighting information of
+                    the surrounding environment as seen from a given viewpoint.The environment map is then used to illuminate objects in the scene by calculating the
+                    indirect lighting contribution from the environment.In this assignment, we implemented two sampling methods (<b>Importance sampling</b>
+                    and <b>uniform sampling</b>) to get the corresponding
+                    environment light for each rendering ray.
+                </li>
+            </ul>
         </p>
         <br />
         <p>
@@ -276,8 +297,11 @@
                 Show the *probability_debug.png* file for the *.exr* file you are using, generated using the `save_probability_debug()` helper function after initializing your probability distributions.
             </b>
         </p>
-        <p>
-            Your response goes here.
+        <p style="line-height:200%">
+            <div align="middle">
+                <img src="part3/1.png" align="middle" width="50%" />
+                <figcaption>*probability_debug.png* file for *ennis.exr*</figcaption>
+            </div>
         </p>
         <br />
         <p>
@@ -285,8 +309,24 @@
                 Use the `bunny_unlit.dae` scene and your environment map *.exr* file and render two pictures, one with uniform sampling and one with importance sampling. Use 4 samples per pixel and 64 samples per light in each. Compare noise levels. Make sure to include all screenshots.
             </b>
         </p>
-        <p>
-            Your response goes here.
+        <p style="line-height:200%">
+            <div align="middle">
+                <table style="width:100%">
+                    <tr align="center">
+                        <td>
+                            <img src="part3/2_1.png" align="middle" width="400px" />
+                            <figcaption>uniform sampling</figcaption>
+                        </td>
+                        <td>
+                            <img src="part3/2_2.png" align="middle" width="400px" />
+                            <figcaption>importance sampling</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            It is very easy to observe that the noise level in the importance sampling is much lower than the noise level utilizing
+            uniform sampling. (very obvious especially on the white cushion). Also, for the bunny's surface, the surface of the importance sampling 
+            is smoother than the uniform sampling. 
         </p>
         <br />
         <p>
@@ -294,8 +334,23 @@
                 Use a different image (if you did part 2, we recommend `bunny_microfacet_cu_unlit.dae`) and your environment map *.exr* file and render two pictures, one with uniform sampling and one with importance sampling. Use 4 samples per pixel and 64 samples per light in each. Compare noise levels. Make sure to include all screenshots.
             </b>
         </p>
-        <p>
-            Your response goes here.
+        <p style="line-height:200%">
+            <div align="middle">
+                <table style="width:100%">
+                    <tr align="center">
+                        <td>
+                            <img src="part3/3_1.png" align="middle" width="400px" />
+                            <figcaption>uniform sampling</figcaption>
+                        </td>
+                        <td>
+                            <img src="part3/3_2.png" align="middle" width="400px" />
+                            <figcaption>importance sampling</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            We think the noise level comparision is nearly the same as the above experiment.  The noise level of the importance sampling is much lower than the noise level utilizing
+            uniform sampling.
         </p>
         <br />
 
