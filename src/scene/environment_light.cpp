@@ -36,6 +36,35 @@ namespace CGL { namespace SceneObjects {
       }
     }
 
+    for (int i = 0; i < w * h; i++) {
+        pdf_envmap[i] /= sum;
+    }
+
+    double* density = new double[h];
+    double cumul = 0;
+    for (int j = 0; j < h; j++) {
+        double p = 0;
+        for (int i = 0; i < w; i++) {
+            p += pdf_envmap[w * j + i];
+        }
+        density[j] = p;
+        cumul += p;
+        marginal_y[j] = cumul;
+    }
+    // Store the conditional distribution for x given y to conds_y
+    for (int j = 0; j < h; j++) {
+        for (int i = 0; i < w; i++) {
+            int index = j * w + i;
+            if (i == 0) {
+                conds_y[index] = 0.0;
+                continue;
+            }
+            else {
+                conds_y[index] = conds_y[index - 1] + pdf_envmap[index] / density[j];
+            }
+        }
+    }
+    delete[] density;
 
 
 
@@ -131,17 +160,34 @@ namespace CGL { namespace SceneObjects {
     *wi = sampler_uniform_sphere.get_sample();
     *distToLight = INF_D;
     *pdf = 1.0 / (4.0 * PI);
+    Vector2D theta_phi = dir_to_theta_phi(*wi);
+    Vector2D xy = theta_phi_to_xy(theta_phi);
+    Vector3D radiance = bilerp(xy);
+    //return radiance;
 
+    Vector2D sample = sampler_uniform2d.get_sample();
+    int w = envMap->w;
+    int h = envMap->h;
 
-    return Vector3D();
+    int y = std::upper_bound(marginal_y, marginal_y + h, sample.y) - marginal_y;
+    int x = std::upper_bound(conds_y + y * w, conds_y + (y + 1) * w, sample.x) - (conds_y + y * w);
+    Vector2D tphi = xy_to_theta_phi(Vector2D(x, y));
+    Vector3D dir = theta_phi_to_dir(tphi);
+
+    *wi = dir;
+    *distToLight = INF_D;
+
+    *pdf = pdf_envmap[y * envMap->w + x] * ((envMap->w * envMap->h) / (float)(2 * PI * PI * sin(tphi.x)));
+    return envMap->data[y * envMap->w + x];
   }
 
   Vector3D EnvironmentLight::sample_dir(const Ray& r) const {
     // TODO: 3-2 Part 3 Task 1
     // Use the helper functions to convert r.d into (x,y)
     // then bilerp the return value
-
-    return Vector3D();
+    Vector2D theta_phi = dir_to_theta_phi(r.d);
+    Vector2D xy = theta_phi_to_xy(theta_phi);
+    return bilerp(xy);
 
   }
 
